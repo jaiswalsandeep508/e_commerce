@@ -1,0 +1,37 @@
+package com.ecommerce.repository;
+
+import com.ecommerce.entity.User;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+@DataJpaTest  // Loads only JPA-related components
+@ExtendWith(SpringExtension.class)
+public class UserRepositoryTest {
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Test
+    public void testSaveUser() {
+        User user = new User(null, "John Doe", "john@example.com", "password123", "CUSTOMER");
+        User savedUser = userRepository.save(user);
+
+        assertThat(savedUser).isNotNull();
+        assertThat(savedUser.getId()).isGreaterThan(0);
+    }
+
+    @Test
+    public void testFindByEmail() {
+        User user = new User(null, "Alice", "alice@example.com", "password123", "CUSTOMER");
+        userRepository.save(user);
+
+        User foundUser = userRepository.findByEmail("alice@example.com").orElse(null);
+        assertThat(foundUser).isNotNull();
+        assertThat(foundUser.getEmail()).isEqualTo("alice@example.com");
+    }
+}
