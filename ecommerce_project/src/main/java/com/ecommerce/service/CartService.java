@@ -1,0 +1,30 @@
+package com.ecommerce.service;
+
+import com.ecommerce.entity.Cart;
+import com.ecommerce.entity.Product;
+import com.ecommerce.entity.User;
+import com.ecommerce.repository.CartRepository;
+import org.springframework.stereotype.Service;
+import java.util.List;
+
+//✅ Handles adding items to cart & fetching user’s cart. 
+//✅ Links cart items to users.
+
+@Service
+public class CartService {
+
+    private final CartRepository cartRepository;
+
+    public CartService(CartRepository cartRepository) {
+        this.cartRepository = cartRepository;
+    }
+
+    public Cart addToCart(User user, Product product, int quantity) {
+        Cart cart = new Cart(null, user, product, quantity);
+        return cartRepository.save(cart);
+    }
+
+    public List<Cart> getUserCart(Long userId) {
+        return cartRepository.findByUserId(userId);
+    }
+}

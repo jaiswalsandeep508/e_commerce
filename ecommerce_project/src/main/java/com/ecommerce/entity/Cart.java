@@ -39,4 +39,12 @@ public class Cart {
 
     @Column(nullable = false)
     private int quantity;
+    
+    public Cart(Long id, User user, Product product, int quantity) {
+        this.id = id;
+        this.user = user;
+        this.product = product;
+        this.quantity = quantity;
+    }
+
 }

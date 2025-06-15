@@ -1,0 +1,31 @@
+package com.ecommerce.service;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.ecommerce.entity.Order;
+import com.ecommerce.entity.User;
+import com.ecommerce.repository.OrderRepository;
+
+//✅ Processes user orders. 
+//✅ Stores order status (Pending, Paid, Shipped).
+
+@Service
+public class OrderService {
+
+    private final OrderRepository orderRepository;
+
+    public OrderService(OrderRepository orderRepository) {
+        this.orderRepository = orderRepository;
+    }
+
+    public Order placeOrder(User user, double totalPrice) {
+        Order order = new Order(null, user, totalPrice, "PENDING", null);
+        return orderRepository.save(order);
+    }
+
+    public List<Order> getUserOrders(Long userId) {
+        return orderRepository.findByUserId(userId);
+    }
+}

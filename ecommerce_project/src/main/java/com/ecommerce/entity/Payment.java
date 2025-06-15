@@ -35,4 +35,12 @@ public class Payment {
 
     @Column(nullable = false)
     private String status;  // Possible values: "SUCCESS", "FAILED", "PENDING"
+    
+ // Manually defined constructor to match service call
+    public Payment(Long id, Order order, String method, String status) {
+        this.id = id;
+        this.order = order;
+        this.method = method;
+        this.status = status;
+    }
 }

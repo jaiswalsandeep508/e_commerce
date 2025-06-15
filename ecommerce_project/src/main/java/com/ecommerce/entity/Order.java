@@ -44,4 +44,13 @@ public class Order {
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt = new Date();
+    
+ // Manually defined constructor to match your call
+    public Order(Long id, User user, double totalPrice, String status, Date createdAt) {
+        this.id = id;
+        this.user = user;
+        this.totalPrice = totalPrice;
+        this.status = status;
+        this.createdAt = (createdAt != null) ? createdAt : new Date(); // Default to current date if null
+    }
 }
